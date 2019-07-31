@@ -12,7 +12,7 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource)
 
 // 导入 App.vue 组件
-import app from './App.vue'
+import app from './components/App.vue'
 
 // 按需导入 MintUI 的 Header 组件
 import { Header } from 'mint-ui';
