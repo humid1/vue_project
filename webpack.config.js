@@ -24,7 +24,8 @@ module.exports = {
     devServer: { // 这是dev-server命令参数的第二种形式
         // --open --port 9000 --contentBase src --hot
         open: true, // 自动打开浏览器
-        port: 9000, // 设置启动运行端口
+        port: 8878, // 设置启动运行端口
+        // host: '192.168.31.103', //可以让手机端访问
         // contentBase: '/', //指定托管目录
         // disableHostCheck: true, // 热更新报错则需要配置和下面这个
         hot: true   //启动热更新 第1步

@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <mt-button type="danger" v-if="this.pages != this.pageNum" size="large" icon="more" plain @click="getMore()">加载更多</mt-button>
+        <mt-button type="danger" v-if="this.pages != 0 && (this.pages != this.pageNum)" size="large" icon="more" plain @click="getMore()">加载更多</mt-button>
         <p v-else="">没有更多数据了!</p>
     </div>
 </template>
@@ -43,6 +43,7 @@ export default {
                 // 每当获取最新数据的时候，不把老数据清空，拼接上之前的数据
                 this.comments = this.comments.concat(result.body.list);
                 this.pages = result.body.pages;
+                // console.log(this.pages);
             },err => {
                 Toast('读取数据失败！' + err.message);
             })

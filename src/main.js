@@ -19,7 +19,7 @@ import VueResource from 'vue-resource'
 // 2.2 安装vue-resource
 Vue.use(VueResource)
 // 设置请求的根路径
-Vue.http.options.root = 'http://localhost:8899/vue-api/'
+Vue.http.options.root = 'http://192.168.31.103:8899/vue-api/'
 
 // 导入 App.vue 组件
 import app from './components/App.vue'
