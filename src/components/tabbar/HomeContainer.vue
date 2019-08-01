@@ -10,9 +10,9 @@
         </mt-swipe>
         <!-- 六宫格区域 -->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/home/newsList">
                     <img src="../../images/menu1.png" alt="图片遇到问题">
-                    <div class="mui-media-body">新闻资讯</div></a></li>
+                    <div class="mui-media-body">新闻资讯</div></router-link></li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
                     <img src="../../images/menu2.png" alt="图片遇到问题">                    <div class="mui-media-body">图片分享</div></a></li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
@@ -45,13 +45,15 @@ export default {
     },
     methods: {
         getSwipe(){
-            this.$http.get('http://localhost:8899/vue-api/getSwipe').then(result => {
+            this.$http.get('getSwipe').then(result => {
                 // console.log(result.body);
                 if(result.body != null){
                     this.swipeList = result.body;
                 } else {
                     Toast('加载轮播图失败！');
                 }
+            },err => {
+                Toast('数据访问错误，' + err);
             });
         }
     }

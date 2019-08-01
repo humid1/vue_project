@@ -2,11 +2,13 @@
 import VueRouter from 'vue-router'
 
 // 导入tabbar 相关的路由组件
-import homeContainer from './components/tabbar/HomeContainer.vue'
-import memberContainer from './components/tabbar/MemberContainer.vue'
-import shopcarContainer from './components/tabbar/ShopcarContainer.vue'
-import searchContainer from './components/tabbar/SearchContainer.vue'
-
+import homeContainer from './components/tabbar/HomeContainer.vue';
+import memberContainer from './components/tabbar/MemberContainer.vue';
+import shopcarContainer from './components/tabbar/ShopcarContainer.vue';
+import searchContainer from './components/tabbar/SearchContainer.vue';
+// 导入首页-新闻相关的组件
+import newsList from "./components/news/NewsList.vue";
+import newsInfo from "./components/news/NewsInfo.vue";
 
 // 3.创建路由对象
 const router = new VueRouter({
@@ -16,6 +18,8 @@ const router = new VueRouter({
          { path:'/member', component: memberContainer},
          { path:'/shopcar', component: shopcarContainer},
          { path:'/search', component: searchContainer},
+         { path:'/home/newsList', component: newsList},
+         { path:'/home/newsInfo/:id', component: newsInfo},
     ],
     linkActiveClass: 'mui-active' // 覆盖默认路由高亮的类
 })
