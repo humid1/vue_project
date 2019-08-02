@@ -9,6 +9,8 @@ import searchContainer from './components/tabbar/SearchContainer.vue';
 // 导入首页-新闻相关的组件
 import newsList from "./components/news/NewsList.vue";
 import newsInfo from "./components/news/NewsInfo.vue";
+// 导入图片分享相关的组件
+import photoList from "./components/photos/PhotoList.vue";
 
 // 3.创建路由对象
 const router = new VueRouter({
@@ -20,6 +22,7 @@ const router = new VueRouter({
          { path:'/search', component: searchContainer},
          { path:'/home/newsList', component: newsList},
          { path:'/home/newsInfo/:id', component: newsInfo},
+         { path:'/home/photoList', component: photoList},
     ],
     linkActiveClass: 'mui-active' // 覆盖默认路由高亮的类
 })

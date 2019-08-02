@@ -48,3 +48,39 @@
     1. 为加载更多按钮，绑定点击事件，在事件中请求，下一页数据，
     2. 点击加载更多，让 pageNum++ , 然后重新调用 this.getComments() 方法重新获取最新的一页数据
     3. 防止新数据覆盖老数据，在点击更多时，获取到新数据，应该让老数据调用数组的 concat 方法，拼接上新数组
+## 发表评论
+    1. 把文本框做双向绑定，发表按钮绑定一个事件
+    2. 校验评论内容是否为空，如果为空，则Toast提示用户，评论内容不能为空
+    3. 通过vue-resource发送一个请求，把评论内容提交给后台服务器
+    4. 当发表评论ok后，重新加载评论数据列表，以查看最新的评论
+        当评论成功后，在客户端手动拼接出一个 最新的评论对象，然后调用数组   的unshift方法，把最新的评论，追加到data中的comments的开头。
+## 改造图片分析按钮为路由链接并显示对应的组件页面
+
+## 图片列表 组件页面结构
+    1. 制作 顶部的滑动条
+    2. 制作底部的图片列表
+    3. 使用 MUI 中的tab-top-webview-main.html ，把slider区域的mui-fullscreen类去掉。
+    4. 顶部滑动的动态JS
+        导入mui.js
+        使用官方提供的方式进行初始化：
+        、、、
+        mui('.mui-scroll-wrapper').scroll({
+	        deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+        });
+        、、、
+    5. 在导入mui.js中。出现的问题
+        1) 可能mui.js中用到的'caller','callee',and 'arguments' 东西，但是，webpack 打包好的bundle.js中，默认是启用严格模式的，所以，两者冲突。
+        解决方案：(1) 把mui.js中的非严格模式的代码改掉，这个方法不现实。
+                 (2) 把webpack打包时候的严格模式禁用掉。
+                    先安装 npm i babel-plugin-transform-remove-strict-mode -D
+                    在.babelrc中配置 { "plugins": ["transform-remove-strict-mode"] }，去掉babel-plugin-transform-runtime.
+                    加上 touch-action: pan-y; 样式
+        2) 解决首次 进入页面 顶部无法滑动 (初始化滑动条必须等DOM元素加载完毕)
+            把滑动条代码，添加到 mounted() 方法中
+        3) 解决 tabbar底部栏 无法切换(与滑动条的class=mui-tab-item冲突)
+            修改class，复制之前的css样式.......好麻烦
+
+
+
+
+

@@ -13,8 +13,9 @@
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/home/newsList">
                     <img src="../../images/menu1.png" alt="图片遇到问题">
                     <div class="mui-media-body">新闻资讯</div></router-link></li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                    <img src="../../images/menu2.png" alt="图片遇到问题">                    <div class="mui-media-body">图片分享</div></a></li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/home/photoList">
+                    <img src="../../images/menu2.png" alt="图片遇到问题">
+                    <div class="mui-media-body">图片分享</div></router-link></li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
                     <img src="../../images/menu3.png" alt="图片遇到问题">
                     <div class="mui-media-body">商品购买</div></a></li>

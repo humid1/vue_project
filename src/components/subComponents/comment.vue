@@ -2,8 +2,8 @@
     <div class="cmt-container">
         <h3>发表评论</h3>
         <hr>
-        <textarea placeholder="请输入你要评论的内容！(最多输入120个字)" maxlength="120"></textarea>
-        <mt-button type="primary" size="large">发表评论</mt-button>
+        <textarea v-model="msg" placeholder="请输入你要评论的内容！(最多输入120个字)" maxlength="120"></textarea>
+        <mt-button type="primary" size="large" @click="addComment()">发表评论</mt-button>
         
         <div class="cmt-list" v-for="(item,i) in comments" :key="item.cid">
             <div class="cmt-item">
@@ -16,8 +16,9 @@
             </div>
         </div>
 
-        <mt-button type="danger" v-if="this.pages != 0 && (this.pages != this.pageNum)" size="large" icon="more" plain @click="getMore()">加载更多</mt-button>
-        <p v-else="">没有更多数据了!</p>
+        <p v-if="this.pages==0">暂无评论！</p>
+        <mt-button type="danger" v-else-if="this.pages > this.pageNum" size="large" icon="more" plain @click="getMore()">加载更多</mt-button>
+        <p v-else-if="this.pages <= this.pageNum">没有更多数据了!</p>
     </div>
 </template>
 
@@ -29,7 +30,8 @@ export default {
         return {
              pageNum: 1, //默认展示第一页
              comments: [], // 所有的评论数据
-             pages: 1   // 页数
+             pages: 1,   // 页数
+             msg: '',    //评论数据
         }
     },
     created(){
@@ -48,9 +50,30 @@ export default {
                 Toast('读取数据失败！' + err.message);
             })
         },
-        getMore(){
+        getMore(){    // 加载更多数据
             this.pageNum++ ;
             this.getComment();
+        },
+        addComment(){ // 增加评论
+
+            // 校验是否为空内容
+            if(this.msg.trim() == ''){
+                return Toast('输入数据不能为空！')
+            }
+            // 发表评论
+            // 参数1：请求的url地址，
+            // 参数2：提交给服务器的数据对象
+            // 参数3：定义提交时候，表单中数据的格式 { emulateJSON = true }
+            this.$http.post('addComments/' + this.id, {cContent: this.msg.trim()}).then(result =>{
+                if(result.body != null){
+                    this.comments.unshift(result.body);
+                    this.msg = "";
+                } else{
+                    Toast('评论失败！');
+                }
+            },err => {
+                Toast('读取数据错误！'+err);
+            })
         }
     },
     props: ['id']
