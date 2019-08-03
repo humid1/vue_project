@@ -36,9 +36,15 @@
 </script>
 
 <style scoped>
+	.mint-header{
+		/* 解决滚动图片遮住顶部 */
+		z-index: 99;
+	}
+
     .app-container{
         padding-top: 40px; 
 		padding-bottom: 50px;
+		/* 使用动画时，隐藏顶部动画效果 */
 		overflow-x: hidden;
     }
 

@@ -27,11 +27,21 @@ Vue.http.options.emulateJSON = true;
 import app from './components/App.vue'
 
 // 按需导入 MintUI 的 Header 组件 Swipe 组件(轮播图)
-import { Header, Swipe, SwipeItem,Button } from 'mint-ui';
-Vue.component(Header.name, Header);
-Vue.component(Swipe.name, Swipe);
-Vue.component(SwipeItem.name, SwipeItem);
-Vue.component(Button.name, Button);
+// import { Header, Swipe, SwipeItem,Button,Lazyload } from 'mint-ui';
+// Vue.component(Header.name, Header);
+// Vue.component(Swipe.name, Swipe);
+// Vue.component(SwipeItem.name, SwipeItem);
+// Vue.component(Button.name, Button);
+// Vue.use(Lazyload);
+
+import MintUI from 'mint-ui'
+Vue.use(MintUI);
+import 'mint-ui/lib/style.css'
+
+//安装图片预览插件
+import VuePreview from 'vue-preview'
+// defalut install
+Vue.use(VuePreview)
 
 // 导入MUI
 import './lib/mui/css/mui.css'
