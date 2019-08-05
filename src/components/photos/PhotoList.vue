@@ -4,9 +4,10 @@
         <div id="slider" class="mui-slider">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
+						<!-- mui自带的tap，类似click -->
 						<a v-for="item in imgcategoryList" :key="item.pid" 
 							:class="['mui-control-item',item.pid == 0 ? 'mui-active' : '']"
-							@click="getImgListByCateId(item.pid)">
+							@tap="getImgListByCateId(item.pid)">
 							{{ item.ptitle }}
 						</a>
 						
