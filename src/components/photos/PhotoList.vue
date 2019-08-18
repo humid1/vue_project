@@ -10,7 +10,6 @@
 							@tap="getImgListByCateId(item.pid)">
 							{{ item.ptitle }}
 						</a>
-						
 					</div>
 				</div>
 		</div>
