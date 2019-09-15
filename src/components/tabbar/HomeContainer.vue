@@ -1,13 +1,14 @@
 <template>
     <div>
         <!-- 轮播图区域 -->
-        <mt-swipe :auto="4000">
+        <!-- <mt-swipe :auto="4000">
             <mt-swipe-item v-for="item in swipeList" :key="item.id">
                 <a :href="item.url">
                     <img :src="item.img" alt="图片加载失败">
                 </a>
             </mt-swipe-item>
-        </mt-swipe>
+        </mt-swipe> -->
+        <swiper :swipeList="swipeList" :isFull="true"></swiper>
         <!-- 六宫格区域 -->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/home/newsList">
@@ -34,6 +35,7 @@
 
 <script>
 import { Toast } from 'mint-ui'
+import swiper from '../subComponents/swiper.vue'
 
 export default {
     data(){
@@ -47,7 +49,7 @@ export default {
     methods: {
         getSwipe(){
             this.$http.get('getSwipe').then(result => {
-                // console.log(result.body);
+                console.log(result.body);
                 if(result.body != null){
                     this.swipeList = result.body;
                 } else {
@@ -57,35 +59,14 @@ export default {
                 Toast('数据访问错误，' + err);
             });
         }
+    },
+    components: {
+        swiper
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.mint-swipe{
-    height: 200px;
-
-    // .mint-swipe-item:nth-child(1){
-    //     background-color: aqua
-    // }
-    // scss专用语法
-    .mint-swipe-item{
-        &:nth-child(1){
-            background-color: aqua;
-        }
-        &:nth-child(2){
-            background-color: red;
-        }
-        &:nth-child(3){
-            background-color: blue;
-        }
-
-        img{
-            width: 100%;
-            height: 100%;
-        }
-    }
-}
 .mui-grid-view.mui-grid-9{
     background-color: #ffffff;
     border: none;
