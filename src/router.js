@@ -15,6 +15,8 @@ import photoInfo from "./components/photos/PhotoInfo.vue";
 // 导入商品相关的组件
 import goodsList from "./components/goods/GoodsList.vue";
 import goodsInfo from "./components/goods/GoodsInfo.vue";
+import goodsDesc from "./components/goods/GoodsDesc.vue";
+import goodsComment from "./components/goods/GoodsComment.vue";
 
 // 3.创建路由对象
 const router = new VueRouter({
@@ -30,6 +32,8 @@ const router = new VueRouter({
          { path:'/home/photoInfo/:pid', component: photoInfo},
          { path:'/home/goodsList', component: goodsList},
          { path:'/home/goodsInfo/:gid', component: goodsInfo, name:'goodsInfo'},
+         { path:'/home/goodsDesc/:gid', component: goodsDesc, name:'goodsDesc'},
+         { path:'/home/goodsComment/:gid', component: goodsComment, name:'goodsComment'},
     ],
     linkActiveClass: 'mui-active' // 覆盖默认路由高亮的类
 })

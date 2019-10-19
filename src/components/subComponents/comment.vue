@@ -82,7 +82,9 @@ export default {
 
 <style lang="scss" scoped>
     .cmt-container{
+        padding: 5px;
         h3{
+            text-align: center;
             font-size: 18px;
         }
         textarea{
