@@ -1,5 +1,11 @@
 <template>
     <div class="goodsInfo-container">
+		<transition
+			@before-enter="beforeEnter"
+			@enter="enter"
+			@after-enter="afterEnter">
+			<div class="ball" v-show="ballFlag" ref="ball"></div>
+		</transition>
         <!-- 商品轮播图区域 -->
         <div class="mui-card">
 				<div class="mui-card-content">
@@ -10,16 +16,16 @@
 			</div>
         <!-- 商品购买区域 -->
         <div class="mui-card">
-				<div class="mui-card-header">{{ goodsInfo.gTitle }}</div>
+				<div class="mui-card-header" id="gTitle">{{ goodsInfo.gTitle }}</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<p class="price">
 							市场价:<del>￥{{ goodsInfo.gMarketPrice }}</del>&nbsp;&nbsp;畅销价:<span class="now_price">￥{{ goodsInfo.gSellPrice }}</span>
 						</p>
-						<p>购买数量: <numbox></numbox></p>
+						<p>购买数量: <numbox @getCount="getSelectedCount" :maxcount="goodsInfo.gStockQuantity"></numbox></p>
 						<p>
 							<mt-button type="primary" size="small">立即购买</mt-button>
-							<mt-button type="danger" size="small">加入购物车</mt-button>
+							<mt-button type="danger" size="small" @click="addToShopCar()">加入购物车</mt-button>
 						</p>
 					</div>
 				</div>
@@ -53,6 +59,8 @@ export default {
 			gid: this.$route.params.gid,// 将路由参数对象中的id挂载到data，方便后期调用
 			lunboImg: [],	// 获取到的轮播图信息
 			goodsInfo: [],	// 获取到的商品信息
+			ballFlag: false, // 控制小球的显隐
+			selectedCount: 1,// 保存用户选择商品数量
 		}
 	},
 	created(){
@@ -85,6 +93,42 @@ export default {
 		goComment(gid){
 			// 点击跳转到 评论页面
 			this.$router.push({ name: "goodsComment",params: {gid} });
+		},
+		addToShopCar(){
+			// 添加到购物车
+			this.ballFlag = !this.ballFlag;
+		},
+		beforeEnter(el){
+			el.style.transform = "translate(0,0)";
+		},
+		enter(el,done){
+			el.offsetWidth;
+			// 动画的位移位置固定了，分辨率改变就会出现问题
+			// 动态计算坐标轴信息
+
+			// 获取小球在页面中的距离
+			const ballPosition = this.$refs.ball.getBoundingClientRect();
+			// 获取购物车上小球的距离,获取徽标
+			const badge = document.getElementById("badge").getBoundingClientRect();
+			// 获取x左轴到屏幕的距离作差
+			const xDist = badge.left - ballPosition.left;
+			// 获取y左轴到屏幕的距离作差
+			const yDist = badge.top - ballPosition.top;
+
+			// el.style.transform = "translate(88px, 168px)";
+			// el.style.transform = "translate(" + xDist + "px," + yDist + "px)";
+			el.style.transform = `translate(${xDist}px,${yDist}px)`; //反向字符串的拼接
+			// el.style.transition = "all 1s ease";
+			el.style.transition = "all 0.5s cubic-bezier(.41,-0.32,.99,.62)";
+			done(); // 调用下面的函数
+		},
+		afterEnter(el){
+			this.ballFlag = !this.ballFlag;
+		},
+		getSelectedCount(count){
+			// 当子组件把选中的数量传递给父组件，把选中数据保存到data上
+			this.selectedCount = count;
+			// console.log("父组件接收到的数量值为"+this.selectedCount);
 		}
 	},
 	components: {
@@ -98,16 +142,36 @@ export default {
 .goodsInfo-container{
     background-color: #eeeeee;
     overflow: hidden;
-}
-.now_price{
-	color: red;
-	font-size: 16px;
-	font-weight: bold;
-}
-.mui-card-footer{
-	display: block;
-	button {
-		margin: 10px 0;
+	#gTitle{
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		height: 76px;
+	}
+	.now_price{
+		color: red;
+		font-size: 16px;
+		font-weight: bold;
+	}
+	.mui-card-footer{
+		display: block;
+		button {
+			margin: 10px 0;
+		}
+	}
+	.ball{
+		width: 15px;
+		height: 15px;
+		border-radius: 50%;
+		background-color: red;
+		position: absolute;
+		top: 425px;
+		left: 140px;
+		// 层级问题
+		z-index: 99; 
 	}
 }
+
 </style>

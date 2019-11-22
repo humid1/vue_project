@@ -23,13 +23,20 @@
 				<span class="mui-tab-label">会员</span>
 			</router-link>
 			<router-link class="mui-tab-item-modify" to="/shopcar">
-				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">0</span></span>
+				<span class="mui-icon mui-icon-extra mui-icon-extra-cart">
+					<span class="mui-badge" id="badge">0</span>
+				</span>
 				<span class="mui-tab-label">购物车</span>
 			</router-link>
 			<router-link class="mui-tab-item-modify" to="/search">
 				<span class="mui-icon mui-icon-search"></span>
 				<span class="mui-tab-label">搜索</span>
 			</router-link>
+			<!-- 分析：如何实现加入购物车，拿到选择数量 -->
+			<!-- 1. 经过分析发现：按钮属于goodsInfo页面，数字属于numbox组件 -->
+			<!-- 2. 由于涉及到父子组件的嵌套，所以无法直接在goodsinfo页面中获取到商品数量 -->
+			<!-- 3. 解决这个问题，涉及到子组件向父组件传值（事件调用机制） -->
+			<!-- 4. 事件调用的本质：父向子传递方法，子调用这个方法，同时把数据当做参数，传递这个方法 -->
 		</nav>
 
     </div>
