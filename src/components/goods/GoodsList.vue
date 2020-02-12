@@ -20,21 +20,21 @@
         <!-- 2. 使用window.location.href的形式，叫做编程式导航 -->
         <div class="goods-item" v-for="item in goodsList" :key="item.gid"
             @click="goDetail(item.gid)">
-            <img :src="item.gImgurl" alt="图片飞了">
-            <h1 class="title">{{ item.gTitle }}</h1>
+            <img :src="item.gimgurl" alt="图片飞了">
+            <h1 class="title">{{ item.gtitle }}</h1>
             <div class="info">
                 <p class="price">
-                    <span class="now">￥{{ item.gSellPrice }}</span>
-                    <span class="old">￥{{ item.gMarketPrice }}</span>
+                    <span class="now">￥{{ item.gsellPrice }}</span>
+                    <span class="old">￥{{ item.gmarketPrice }}</span>
                 </p>
                 <p class="sell">
                     <span>热卖中</span>
-                    <span>剩余{{ item.gStockQuantity }}件</span>
+                    <span>剩余{{ item.gstockQuantity }}件</span>
                 </p>
             </div>
         </div>
 
-        <mt-button @click="getMore()" type="danger" size="large" icon="more" plain>加载更多</mt-button>
+        <mt-button @click="getMore()" v-show="flag" type="danger" size="large" icon="more" plain>加载更多</mt-button>
     </div>
 </template>
 
@@ -45,7 +45,8 @@ export default {
     data(){
         return {
             pageNum: 1,     //分页页数
-            goodsList: []   // 商品列表
+            goodsList: [],   // 商品列表
+            flag: true      // 加载更多显隐
         }
     },
     created(){
@@ -54,10 +55,14 @@ export default {
     methods: {
         // 获取商品数据的方法
         getGoodsList(){
-            this.$http.get("getGoods?pageNum=" + this.pageNum).then(result =>{
+            this.$http.get("goods/page?pageNum=" + this.pageNum).then(result =>{
                 // console.log(result.body.list);
                 // this.goodsList = result.body.list;
-                this.goodsList = this.goodsList.concat(result.body.list);
+                this.goodsList = this.goodsList.concat(result.body.records);
+                // 隐藏加载更多按钮
+                if(this.pageNum == result.body.pages){
+                    this.flag = false;
+                }
             },err => {
                 Toast("商品数据读取失败！" + err);
             })

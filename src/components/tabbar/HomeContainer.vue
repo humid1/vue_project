@@ -48,7 +48,7 @@ export default {
     },
     methods: {
         getSwipe(){
-            this.$http.get('getSwipe').then(result => {
+            this.$http.get('swipeData/list').then(result => {
                 console.log(result.body);
                 if(result.body != null){
                     this.swipeList = result.body;

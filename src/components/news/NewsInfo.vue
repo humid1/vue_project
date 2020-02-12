@@ -33,7 +33,7 @@ export default {
     },
     methods:{
         getNewsInfo(){ // 获取新闻详情
-            this.$http.get('getOneNews/' + this.id).then(result => {
+            this.$http.get('news/getOne/' + this.id).then(result => {
                 // console.log(result.body);
                 this.news = result.body;
             },err => {

@@ -55,7 +55,7 @@ export default {
     methods:{
 		// 获取所有图片分类
 		getImgcategory(){
-			this.$http.get('getImgcategory').then(result => {
+			this.$http.get('imgcategory/list').then(result => {
 				result.body.unshift({ pid: 0 , ptitle: '全部'});
 				// console.log(result.body);
 				this.imgcategoryList = result.body
@@ -65,7 +65,7 @@ export default {
 		},
 		getImgListByCateId(cateId){
 			// 根据分类id，获取图片列表
-			this.$http.get('getImgages/' + cateId).then(result =>{
+			this.$http.get('img/list/' + cateId).then(result =>{
 				this.list = result.body;
 				console.log(result.body);
 			},err => {

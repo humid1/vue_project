@@ -16,13 +16,13 @@
 			</div>
         <!-- 商品购买区域 -->
         <div class="mui-card">
-				<div class="mui-card-header" id="gTitle">{{ goodsInfo.gTitle }}</div>
+				<div class="mui-card-header" id="gTitle">{{ goodsInfo.gtitle }}</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<p class="price">
-							市场价:<del>￥{{ goodsInfo.gMarketPrice }}</del>&nbsp;&nbsp;畅销价:<span class="now_price">￥{{ goodsInfo.gSellPrice }}</span>
+							市场价:<del>￥{{ goodsInfo.gmarketPrice }}</del>&nbsp;&nbsp;畅销价:<span class="now_price">￥{{ goodsInfo.gsellPrice }}</span>
 						</p>
-						<p>购买数量: <numbox @getCount="getSelectedCount" :maxcount="goodsInfo.gStockQuantity"></numbox></p>
+						<p>购买数量: <numbox @getCount="getSelectedCount" :maxcount="goodsInfo.gstockQuantity"></numbox></p>
 						<p>
 							<mt-button type="primary" size="small">立即购买</mt-button>
 							<mt-button type="danger" size="small" @click="addToShopCar()">加入购物车</mt-button>
@@ -35,9 +35,9 @@
 				<div class="mui-card-header">商品参数</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
-						<p>商品货号: {{ goodsInfo.gNo }}</p>
-						<p>库存情况: {{ goodsInfo.gStockQuantity }}件</p>
-						<p>上架时间: {{ goodsInfo.gTime | dataFormat }}</p>
+						<p>商品货号: {{ goodsInfo.gno }}</p>
+						<p>库存情况: {{ goodsInfo.gstockQuantity }}件</p>
+						<p>上架时间: {{ goodsInfo.gtime | dataFormat }}</p>
 					</div>
 				</div>
 				<div class="mui-card-footer">
@@ -69,10 +69,11 @@ export default {
 	},
 	methods: {
 		getLunbo(){
-			this.$http.get("getGoodsImglist/" + this.gid).then(result => {
+			this.$http.get("goodsImglist/getList/" + this.gid).then(result => {
 				// 更换json数据的key值
 				result.body.forEach(item => {
 					item.url = "#";
+					item.img = item.goodsImgsrc;
 				})
 				console.log(result.body);
 				this.lunboImg = result.body;
@@ -81,7 +82,7 @@ export default {
             })
 		},
 		getGoodsInfo(){
-			this.$http.get("getGoodsById/"+this.gid).then(result => {
+			this.$http.get("goods/getOne/"+this.gid).then(result => {
 				// 获取商品信息
 				this.goodsInfo = result.body;
 			});

@@ -34,7 +34,7 @@ export default {
     methods: {
         getNewsList(){ // 获取新闻列表
             // 基于全局Vue对象使用http
-            this.$http.get('getNewsList').then( result => {
+            this.$http.get('news/list').then( result => {
                 this.newsList = result.body;
             },err => {
                 Toast('数据访问错误，' + err);

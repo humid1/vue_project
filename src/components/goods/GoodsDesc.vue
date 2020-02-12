@@ -18,7 +18,7 @@ export default {
     },
     methods: {
         getGoodsDesc(){
-            this.$http.get("getGoodsDesc/" + this.$route.params.gid).then(result => {
+            this.$http.get("goodsDesc/getOneDesc/" + this.$route.params.gid).then(result => {
                 console.log(result.body);
                 this.info = result.body;
             });
