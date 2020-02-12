@@ -35,6 +35,7 @@
         </div>
 
         <mt-button @click="getMore()" v-show="flag" type="danger" size="large" icon="more" plain>加载更多</mt-button>
+        <p v-show="!flag" class="nomore">暂无更多商品...</p>
     </div>
 </template>
 
@@ -96,6 +97,11 @@ export default {
         flex-wrap: wrap;
         padding: 5px;
         justify-content: space-between;
+        .nomore{
+            color: #cccccc;
+            width: 100%;
+            text-align: center;
+        }
         h1{
             // 复制jd的代码
             overflow: hidden;
