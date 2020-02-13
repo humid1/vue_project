@@ -110,7 +110,7 @@ export default {
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             height: 32px;
-            padding: 4px;
+            padding: 5px;
         }
 
         .goods-item{

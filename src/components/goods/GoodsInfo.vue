@@ -98,6 +98,21 @@ export default {
 		addToShopCar(){
 			// 添加到购物车
 			this.ballFlag = !this.ballFlag;
+			// 拼接出一个商品对象信息，保存到store中car数组中的商品信息对象
+			var goodsCarInfo = {
+				id: this.gid,
+				count: this.selectedCount,
+				price: this.goodsInfo.gsellPrice,
+				selected: true
+			};
+			// 添加到数据库中
+			this.$http.post("shopcar/add",{gid: this.gid,count: this.selectedCount}).then(result => {
+				if(Number(result.body) > 0){
+					console.log("数据库中添加购物车成功！");
+				}
+			})
+			// 调用store中的mutations来将数据传到vuex仓储中
+			this.$store.commit('addToCar',goodsCarInfo);
 		},
 		beforeEnter(el){
 			el.style.transform = "translate(0,0)";
