@@ -2,17 +2,21 @@
     <div class="shopcar-container">
         <!-- 商品区域 -->
         <div class="goods-list">
-            <div class="mui-card" v-for="item in goodsCarList" :key="item.id">
+            <div class="mui-card" v-for="(item,i) in goodsCarList" :key="item.gid">
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
-                        <mt-switch></mt-switch>
-                        <img :src="item.thumbPath" alt="图片加载失败">
+                        <mt-switch v-model="$store.getters.getGoodsSelected[item.gid]"
+                                @change="selectedChanged(item.gid, $store.getters.getGoodsSelected[item.gid])"></mt-switch>
+                        <img :src="item.gimgurl" alt="图片加载失败">
                         <div class="info">
-                            <h1>{{ item.title }}</h1>
+                            <h1>{{ item.gtitle }}</h1>
                             <p>
-                                <span class="price">￥{{ item.price }}</span>
-                                <numbox :count="item.count"></numbox>
-                                <a href="#">删除</a>
+                                <span class="price">￥{{ item.gsellPrice }}</span>
+                                <numbox :count="$store.getters.getGoodsCount[item.gid]" :gid="item.gid"></numbox>
+                                <!-- 问题：如何从vuex购物车中获取商品数据 -->
+                                <!-- 1.先创建一个空对象，然后循环购物车中所有商品的数据，把当前循环的这条商品id，作为对象的属性名， count 值作为对象的属性值，这样把所有的商品循环一遍，就会得到对象
+                                { 88:1,89:2 } -->
+                                <a href="#" @click.prevent="remove(item.gid, i)">删除</a>
                             </p>
                         </div>
                     </div>
@@ -21,12 +25,15 @@
         </div>
         <!-- 结算区域 -->
         <div class="mui-card">
-            <div class="mui-card-content">
+            <div class="mui-card-content jiesuan">
                 <div class="mui-card-content-inner">
-                    这是一个最简单的卡片视图控件；卡片视图常用来显示完整独立的一段信息，比如一篇文章的预览图、作者信息、点赞数量等
+                    <p>总计(不含运费)：</p>
+                    <p>已勾选商品<span class="red"> {{ $store.getters.getSelectCountAndPrice.count }} </span>件，总价：<span class="red">￥{{$store.getters.getSelectCountAndPrice.amout }}</span></p>
                 </div>
+                <mt-button type="danger">去结算</mt-button> 
             </div>
         </div>
+        <p>{{ $store.getters.getGoodsSelected }}</p>
     </div>
 </template>
 
@@ -56,12 +63,25 @@ export default {
                 return;
             }
             // 获取购物车商品列表
-            this.$http.get('shopcar/getlist/'+idArr.join(",")).then(result => {
+            this.$http.get('shopcar/getlist2/'+idArr.join(",")).then(result => {
                 console.log(result.body);
                 this.goodsCarList = result.body;
             });
+        },
+        remove(id, index){
+            // 点击删除，把商品从 store 中根据传递的id删除，同时把当前组件中的goodlist中，对应要删除的商品，使用index进行删除
+            this.goodsCarList.splice(index, 1);
+            this.$store.commit("removeFormCar",id);
+        },
+        selectedChanged(id, val){
+            // 每当点击开关，把最新的 开关状态，同步到store中
+            // console.log(id,val);
+            this.$store.commit("updateGoodsSelected",{
+                // id: id,
+                id,
+                selected: val
+            });
         }
-
     }
 }
 </script>
@@ -102,6 +122,15 @@ export default {
                     color: red;
                     font-weight: bold
                 }
+            }
+        }
+        .jiesuan{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .red{
+                font-weight: 700;
+                color: red;
             }
         }
     }

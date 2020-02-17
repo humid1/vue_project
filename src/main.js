@@ -41,6 +41,38 @@ var store = new Vuex.Store({
             }
             // 当更新 car 之后，把 car 数组，存储到 本地的 localStorage 中
             localStorage.setItem("car",JSON.stringify(state.car));
+        },
+        updateGoodsInfo(state,goodCarInfo){
+            // 修改购物车中商品的数量值
+            console.log(goodCarInfo);
+            state.car.some( item => {
+                if(item.id == goodCarInfo.id){
+                    item.count = parseInt(goodCarInfo.count);
+                    return true; // 结束循环，相当于break
+                }
+            })
+            // 当更新 car 之后，把 car 数组，存储到 本地的 localStorage 中
+            localStorage.setItem("car",JSON.stringify(state.car));
+        },
+        removeFormCar(state, id){
+            // 根据id，从store中的购物车中对应的那条商品数据
+            state.car.some((item, i) => {
+                if(item.id == id){
+                    state.car.splice(i, 1);
+                    return true;
+                }
+            })
+            // 当更新 car 之后，把 car 数组，存储到 本地的 localStorage 中
+            localStorage.setItem("car",JSON.stringify(state.car));
+        },
+        updateGoodsSelected(state, info){
+            state.car.some(item => {
+                if(item.id == info.id){
+                    item.selected = info.selected;
+                }
+            });
+            // 当更新 car 之后，把 car 数组，存储到 本地的 localStorage 中
+            localStorage.setItem("car",JSON.stringify(state.car));
         }
     },
     getters: { // this.$store.getters.****
@@ -51,6 +83,33 @@ var store = new Vuex.Store({
                 c += item.count;
             });
             return c;
+        },
+        getGoodsCount(state){
+            var o = {};
+            state.car.forEach(item => {
+                o[item.id] = item.count;
+            })
+            return o;
+        },
+        getGoodsSelected(state){
+            var o = {};
+            state.car.forEach(item => {
+                o[item.id] = item.selected;
+            })
+            return o;
+        },
+        getSelectCountAndPrice(state){
+            var o = {
+                count: 0,
+                amout: 0.00,
+            };
+            state.car.some(item => {
+                if(item.selected){
+                    o.count += parseInt(item.count);
+                    o.amout += item.count * item.price;
+                }
+            });
+            return o;
         }
     }
 })
