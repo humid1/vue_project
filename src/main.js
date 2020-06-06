@@ -127,7 +127,8 @@ import VueResource from 'vue-resource'
 // 2.2 安装vue-resource
 Vue.use(VueResource)
 // 设置请求的根路径
-Vue.http.options.root = 'http://127.0.0.1:8085/vue_api/'
+// Vue.http.options.root = 'http://127.0.0.1:8085/vue_api/'
+Vue.http.options.root = 'http://47.103.14.67/vue_api/'
 // 全局设置post提交表单数据格式组织形式
 Vue.http.options.emulateJSON = true;
 
